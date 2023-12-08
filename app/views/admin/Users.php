@@ -7,6 +7,18 @@ require_once './check.php';
 $user = new Users();
 $agencyy = new Agency();
 
+$errors=[
+    'username'=>'',
+     'email'=>'',
+     'phone'=>'',
+     'password'=>'',
+     'newpassword'=>'',
+     'rue'=>'',
+     'quartier'=>'',
+     'ville'=>'',
+     'postal'=>''
+  
+  ];
 
 
 $agency_list=$agencyy->displayAgency();
@@ -14,7 +26,7 @@ $agency_list=$agencyy->displayAgency();
 $data_users=$user->displayUser();  
 
 
-$lastId=$user->lastUserId();
+// $lastId=$user->lastUserId();
 // var_dump($lastId);
 
 
@@ -26,43 +38,72 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $gendre=$_POST['gendre'];
   $phone=$_POST['phone'];
   $password=password_hash($_POST['password'], PASSWORD_BCRYPT);
+  $newpassword = $_POST['newpassword'];
   $rue=$_POST['rue'];
   $ville=$_POST['ville'];
   $quartier=$_POST['quartier'];
   $agency=$_POST['agency'];
-  $roles=$_POST['roles'];
-  $role=$roles[0];
+  $role = $_POST['role'];
   $postal=$_POST['postal'];
   
-  $user->addUser($username,$password,$gendre,$role,$ville,$quartier,$rue,$postal,$email,$phone,$agency);
+  if (!preg_match("/^[A-Za-z\s]+$/", $username)) {
+    $errors['username'] = "Invalid name format";
+}
+if (!filter_var($email, FILTER_VALIDATE_EMAIL) || !strpos($email, '@gmail.com')) {
+    $errors['email'] = "Invalid email format or not a Gmail address";
+}
+if (!preg_match("/^\+?\d{1,4}[-.\s]?\(?\d{1,4}\)?[-.\s]?\d{1,9}$/", $phone)) {
+  $errors['phone'] = "Invalid phone number format";
+}
+
+if (empty($_POST['password'] !== $_POST['newpassword'])) {
+    $errors['password'] = "Passwords do not match";
+}
+if (empty($ville)) {
+  $errors['ville'] = "please fill up the ville";
+}
+if (empty($quartier)){
+  $errors['quartier'] = "please fill up the quartier";
+}
+if (empty($rue)){
+  $errors['rue'] = "please fill up the rue";
+}
+if (empty($postal)){
+  $errors['postal'] = "please fill up the postal";
+}
+
+
+if (empty(array_filter($errors))) {
+  $user->addUser($username, $password, $gendre, $role, $ville, $quartier, $rue, $postal, $email, $phone, $agency);
+}
 //   $data_users=$user->displayUser();  
 
-$lastId=$user->lastUserId();
+// $lastId=$user->lastUserId();
   
 
 
 // print_r($roles);
 //   var_dump($lastUserId);
-  if (count($roles) > 1){
-      array_shift($roles);
-      foreach ($roles as $rol) {
+//   if (count($roles) > 1){
+//       array_shift($roles);
+//       foreach ($roles as $rol) {
         
-        // $user->addMultiRoles($lastId,$rol);
-        // var_dump($rol);
+//         $user->addMultiRoles($lastId,$rol);
+//         var_dump($rol);
 
         
-      }
+//       }
       
       
-  }
-}
+//   }
+// }
 // print_r($roles);
 
 
 
 // ($username,$pw,$gendre,$role,$ville, $quartier,$rue,$codePostal,$email,$tel)
 
-
+}
 
 
 ?>
@@ -163,12 +204,18 @@ $lastId=$user->lastUserId();
                     <input type="text" name="username"
                         class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                         placeholder="Enter Username " />
+                    <?php if (!empty($errors['username'])) : ?>
+                    <div class="text-red-500"><?php echo $errors['username']; ?></div>
+                    <?php endif; ?>
                 </div>
                 <div class="w-[50%]">
                     <label for="" class="text-xl">Email</label>
                     <input type="email" name="email"
                         class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                         placeholder="Enter email " />
+                    <?php if (!empty($errors['email'])) : ?>
+                    <div class="text-red-500"><?php echo $errors['email']; ?></div>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -188,6 +235,10 @@ $lastId=$user->lastUserId();
                     <input type="tel" name="phone"
                         class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                         placeholder="Enter Your Phone " />
+                    <?php if (!empty($errors['phone'])) : ?>
+                    <div class="text-red-500"><?php echo $errors['phone']; ?></div>
+                    <?php endif; ?>
+
                 </div>
             </div>
             <!-- phone -->
@@ -197,32 +248,43 @@ $lastId=$user->lastUserId();
                     <label for="" class="text-xl">Password</label>
                     <input type="password" name="password" placeholder="Enter Password"
                         class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100" />
+                    <?php if (!empty($errors['password'])) : ?>
+                    <div class="text-red-500"><?php echo $errors['password']; ?></div>
+                    <?php endif; ?>
                 </div>
                 <div class="w-[50%]">
-                    <label for="" class="text-xl">Confirm Password</label>
+                    <label for="newpassword" class="text-xl">Confirm Password</label>
                     <input type="password" name="newpassword" placeholder="Confirm your Password"
                         class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100" />
-                </div>
+                </div><?php if (!empty($errors['newpassword'])) : ?>
+                <div class="text-red-500"><?php echo $errors['newpassword']; ?></div>
+                <?php endif; ?>
             </div>
             <div class="flex gap-5">
                 <div class="w-full">
                     <label for="" class="text-xl">Rue</label>
                     <input type="text" name="rue"
                         class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
-                        placeholder="Enter Rue " />
+                        placeholder="Enter Rue " /><?php if (!empty($errors['rue'])) : ?>
+                    <div class="text-red-500"><?php echo $errors['rue']; ?></div>
+                    <?php endif; ?>
                 </div>
                 <div class="w-full">
                     <label for="" class="text-xl">Ville</label>
                     <input type="text" name="ville"
                         class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
-                        placeholder="Enter Ville" />
+                        placeholder="Enter Ville" /><?php if (!empty($errors['ville'])) : ?>
+                    <div class="text-red-500"><?php echo $errors['ville']; ?></div>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="w-full">
                 <label for="" class="text-xl">Quartier</label>
                 <input type="text" name="quartier"
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
-                    placeholder="Enter  Quartier " />
+                    placeholder="Enter  Quartier " /><?php if (!empty($errors['quartier'])) : ?>
+                <div class="text-red-500"><?php echo $errors['quartier']; ?></div>
+                <?php endif; ?>
             </div>
 
             <div class="flex gap-4">
@@ -231,25 +293,20 @@ $lastId=$user->lastUserId();
                     <select name="agency" id=""
                         class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100">
 
-                        <?php 
-                                            foreach($agency_list as $user) {
-                                                echo "
-                                                <option value='$user->agencyId'>$user->agencyId-$user->name</option>
+                        <?php
+            foreach ($agency_list as $user) {
+              echo "
+                                                <option value='$user->agencyId'>$user->agencyId</option>
                                                 ";
-                                            }
-                                        ?>
+            }
+            ?>
                     </select>
                 </div>
                 <div class="w-[33%]">
-                    <label for="" class="form-label text-xl">Roles</label>
-                    <select name="roles[]" id=""
-                        class="roles form-select roles block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
-                        multiple>
-
-                        <?php if ($_SESSION["role"] === "admin") { ?>
+                    <label for="" class="text-xl">Role</label>
+                    <select name="role" id=""
+                        class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100">
                         <option value="admin">Admin</option>
-                        <option value="subadmin">subadmin</option>
-                        <?php } ?>
                         <option value="client">Client</option>
 
                     </select>
@@ -258,7 +315,9 @@ $lastId=$user->lastUserId();
                     <label for="" class="text-xl">Code Postal</label>
                     <input type="text" name="postal"
                         class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
-                        placeholder="Enter Code postal " />
+                        placeholder="Enter Code postal " /><?php if (!empty($errors['postal'])) : ?>
+                    <div class="text-red-500"><?php echo $errors['postal']; ?></div>
+                    <?php endif; ?>
                 </div>
             </div>
 

@@ -2,10 +2,34 @@
 
     require_once("../../controllers/distributer/controller.php");
     require_once './check.php';
+  
 
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "bank_db_br7";
 
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-?>
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['group_by'])) {
+        $sql = "SELECT COUNT(bankid) AS NumberOf, bankid FROM atm GROUP BY bankid";
+        $result = $conn->query($sql);
+    
+        // if ($result->num_rows > 0) {
+        //     // Output data of each row
+        //     while ($row = $result->fetch_assoc()) {
+        //         echo "Bank ID: " . $row["bankid"] . " - Number of atms: " . $row["NumberOf"] . "<br>";
+        //     }
+        // } else {
+        //     echo "0 results";
+        // }
+    }
+    ?>
 
 <?php include './aside.php'?>
 
@@ -19,15 +43,21 @@
             <p class="text-xl">Our Banks around The world</p>
         </div>
         <div>
-            <?php if ($_SESSION["role"] === "admin") { ?>
-
             <button class="bg-slate-900 text-white w-[160px] h-[50px] rounded-md" id="addBank">
                 Add Distributer
             </button>
-            <?php } ?>
-
         </div>
     </div>
+
+
+
+    <form action="#" name="group_by" method="post">
+        <button type="submit" name="group_by"
+            class="rounded-md block w-[10rem] py-3 text-white mt-5 text-xl px-1 cursor-pointer my-2 outline-none border-none bg-slate-900">
+            Group by Bank
+        </button>
+    </form>
+
     <!-- ========== table Banks ======== -->
     <div class="rounded-lg overflow-hidden mt-10">
         <table class="w-full table-auto" id="table1">
@@ -38,29 +68,21 @@
                     <th class="">Latitude</th>
                     <th class="">Address</th>
                     <th class="">BankID</th>
-                    <?php if ($_SESSION["role"] === "admin") { ?>
-
-
-
                     <th class="">Actions</th>
-                    <?php } ?>
-
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($distributers as $distributer): ?>
-
+                <?php foreach ($distributers as $distributer) : ?>
                 <tr class="h-[50px]">
-                    <td class="text-center"><?=$distributer['atmId']?></td>
-                    <td class="text-center"><?=$distributer['longitude']?></td>
-                    <td class="text-center"><?=$distributer['latitude']?></td>
-                    <td class="text-center"><?=$distributer['adress']?></td>
-                    <?php foreach($banks as $bank): ?>
-                    <?php if($bank->bankId == $distributer['bankId']){ ?>
-                    <td class="text-center"><?=$bank->name?></td>
+                    <td class="text-center"><?= $distributer['atmId'] ?></td>
+                    <td class="text-center"><?= $distributer['longitude'] ?></td>
+                    <td class="text-center"><?= $distributer['latitude'] ?></td>
+                    <td class="text-center"><?= $distributer['adress'] ?></td>
+                    <?php foreach ($banks as $bank) : ?>
+                    <?php if ($bank->bankId == $distributer['bankId']) { ?>
+                    <td class="text-center"><?= $bank->name ?></td>
                     <?php } ?>
                     <?php endforeach; ?>
-                    <?php if ($_SESSION["role"] === "admin") { ?>
                     <td class="text-center">
                         <button class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md" onclick="">
                             <a href=<?php echo "Distributer.php?id=" . $distributer['atmId'] ?>><i
@@ -72,7 +94,6 @@
                                     class="fa-solid fa-trash"></i></a>
                         </button>
                     </td>
-                    <?php } ?>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
