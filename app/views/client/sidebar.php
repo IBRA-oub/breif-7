@@ -1,7 +1,6 @@
-
 <?php
 
-    session_start();
+    // session_start();
     $username = $_SESSION["username"]
 
 ?>
@@ -13,8 +12,17 @@
         <h2 class="rounded-b-lg text-center text-xl text-black p-2 font-bold bg-white"><?=$username?></h2>
     </div>
     <div class="w-[70%] m-auto flex flex-col justify-between mt-10 text-black text-xl">
-        <a href="" class="h-[5vh] bg-white rounded-lg"><button class="w-full flex items-center h-full" type="button"><span class="w-[20%]"><i class="fa-solid fa-table" style="color: #000;"></i></span><span class="h-full border-black border-l-8"></span><span class="w-[80%] font-extrabold">Comptes</span></button></a>
-        <a href="" class="h-[5vh] bg-white rounded-lg mt-10"><button class="w-full flex items-center h-full" type="button"><span class="w-[20%]"><i class="fa-solid fa-arrow-right-arrow-left" style="color: #000;"></i></span><span class="h-full border-black border-l-8"></span><span class="w-[80%] font-extrabold">Tranasctions</span></button></a>
-        <a href="" class="h-[5vh] bg-white rounded-lg mt-10"><button class="w-full flex items-center h-full" type="button"><span class="w-[20%]"><i class="fa-solid fa-arrow-right-arrow-left" style="color: #000;"></i></span><span class="h-full border-black border-l-8"></span><span class="w-[80%] font-extrabold">Transferes</span></button></a>
+        <a href="" class="h-[5vh] bg-white rounded-lg"><button class="w-full flex items-center h-full"
+                type="button"><span class="w-[20%]"><i class="fa-solid fa-table" style="color: #000;"></i></span><span
+                    class="h-full border-black border-l-8"></span><span
+                    class="w-[80%] font-extrabold">Comptes</span></button></a>
+        <a href="" class="h-[5vh] bg-white rounded-lg mt-10"><button class="w-full flex items-center h-full"
+                type="button"><span class="w-[20%]"><i class="fa-solid fa-arrow-right-arrow-left"
+                        style="color: #000;"></i></span><span class="h-full border-black border-l-8"></span><span
+                    class="w-[80%] font-extrabold">Tranasctions</span></button></a>
+        <a href="" class="h-[5vh] bg-white rounded-lg mt-10"><button class="w-full flex items-center h-full"
+                type="button"><span class="w-[20%]"><i class="fa-solid fa-arrow-right-arrow-left"
+                        style="color: #000;"></i></span><span class="h-full border-black border-l-8"></span><span
+                    class="w-[80%] font-extrabold">Transferes</span></button></a>
     </div>
 </section>

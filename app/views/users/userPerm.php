@@ -1,86 +1,36 @@
 <?php
 require_once("../../models/user.php");
-require_once("../../models/agency.php");
-require_once("../../models/DataProvider.php");
-require_once './check.php';
+require_once("../../models/user.php");
+
+require_once '../admin/check.php';
 
 $user = new Users();
-$agencyy = new Agency();
 
 
-
-$agency_list=$agencyy->displayAgency();
-
-$data_users=$user->displayUser();  
+$idp=$_GET['id'];
 
 
-$lastId=$user->lastUserId();
-// var_dump($lastId);
+$data_users=$user->displayUserPermission($idp);
 
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  
-
-    $username=$_POST['username'];
-    $email=$_POST['email'];
-  $gendre=$_POST['gendre'];
-  $phone=$_POST['phone'];
-  $password=password_hash($_POST['password'], PASSWORD_BCRYPT);
-  $rue=$_POST['rue'];
-  $ville=$_POST['ville'];
-  $quartier=$_POST['quartier'];
-  $agency=$_POST['agency'];
-  $roles=$_POST['roles'];
-  $role=$roles[0];
-  $postal=$_POST['postal'];
-  
-  $user->addUser($username,$password,$gendre,$role,$ville,$quartier,$rue,$postal,$email,$phone,$agency);
-//   $data_users=$user->displayUser();  
-
-$lastId=$user->lastUserId();
-  
-
-
-// print_r($roles);
-//   var_dump($lastUserId);
-  if (count($roles) > 1){
-      array_shift($roles);
-      foreach ($roles as $rol) {
-        
-        // $user->addMultiRoles($lastId,$rol);
-        // var_dump($rol);
-
-        
-      }
-      
-      
-  }
-}
-// print_r($roles);
-
-
-
-// ($username,$pw,$gendre,$role,$ville, $quartier,$rue,$codePostal,$email,$tel)
-
-
-
+// print_r($data_users);
 
 ?>
 
 
 
+<?php include '../admin/aside.php'?>
 
 
-<?php include './aside.php'?>
 
 <!-- ============ Content ============= -->
 <div class="p-6 bg-white m-5">
     <div class="flex items-center justify-between">
         <div>
             <h3 class="text-orange-600 text-3xl font-bold tracking-widest mb-2">
-                Users
+                <?php echo $data_users[0]->username ?>
+
             </h3>
-            <p class="text-xl">Our Users around The world</p>
+            <p class="text-xl">All <?php echo $data_users[0]->username ?> Permissions </p>
         </div>
         <div>
             <button class="bg-slate-900 text-white w-[160px] h-[50px] rounded-md" id="addBank">
@@ -93,12 +43,12 @@ $lastId=$user->lastUserId();
         <table class="w-full table-auto" id="table1">
             <thead class="">
                 <tr class="bg-slate-900 text-white h-[60px]">
-                    <th class="">ID</th>
+                    <!-- <th class="">ID</th>
                     <th class="">Username</th>
-                    <th class="">Role</th>
-                    <th class="">Email</th>
+                    <th class="">Role</th> -->
+                    <th class="">Permission</th>
 
-                    <th class="">Actions</th>
+                    <!-- <th class="">Actions</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -110,36 +60,27 @@ $lastId=$user->lastUserId();
               ?>
                 <tr class="h-[50px]">
 
-                    <td class="text-center"><?php echo $duser->userId ?></td>
-                    <td class="text-center"><?php echo $duser->username ?></td>
-                    <td class="text-center"><?php echo $duser->roleName ?></td>
-                    <td class="text-center"><?php echo $duser->email ?></td>
-                    <td class="text-center">
+
+                    <td class="text-center"><?php echo $duser->permission_name ?></td>
+                    <!-- <td class="text-center">
                         <button class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md">
-                            <a href="../../../app/views/users/updateUser.php?user_id=<?= $duser->userId;?>"> <i
+                            <a href="../../../app/views/users/updateUser.php?user_id="> <i
                                     class="fa-solid fa-pen"></i></a>
 
 
                         </button>
                         <button class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md">
-                            <a href="../../../app/views/users/deleteUser.php?user_id=<?= $duser->userId;?>"><i
+                            <a href="../../../app/views/users/deleteUser.php?user_id="><i
                                     class="fa-solid fa-trash"></i></a>
 
                         </button>
 
                         <button class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md">
-                            <a href="../../../app/views/users/UserAcc.php?user_id=<?= $duser->userId;?>"><i
+                            <a href="../../../app/views/users/UserAcc.php?user_id="><i
                                     class="fa-solid fa-file"></i></a>
 
                         </button>
-
-
-                        <button class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md">
-                            <a href="../../../app/views/users/userPerm.php?id=<?= $duser->userId;?>"><i
-                                    class="fa-solid fa-gears"></i></a>
-
-                        </button>
-                    </td>
+                    </td> -->
 
                 </tr>
                 <?php 
@@ -234,22 +175,17 @@ $lastId=$user->lastUserId();
                         <?php 
                                             foreach($agency_list as $user) {
                                                 echo "
-                                                <option value='$user->agencyId'>$user->agencyId-$user->name</option>
+                                                <option value='$user->agencyId'>$user->agencyId</option>
                                                 ";
                                             }
                                         ?>
                     </select>
                 </div>
                 <div class="w-[33%]">
-                    <label for="" class="form-label text-xl">Roles</label>
-                    <select name="roles[]" id=""
-                        class="roles form-select roles block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
-                        multiple>
-
-                        <?php if ($_SESSION["role"] === "admin") { ?>
+                    <label for="" class="text-xl">Role</label>
+                    <select name="role" id=""
+                        class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100">
                         <option value="admin">Admin</option>
-                        <option value="subadmin">subadmin</option>
-                        <?php } ?>
                         <option value="client">Client</option>
 
                     </select>
@@ -398,43 +334,6 @@ $(document).ready(function() {
     $('#table1').DataTable();
 });
 </script>
-
-
-<!-- ============multiple=============== -->
-
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-    $(".roles").select2();
-});
-$("body").on("click", ".add-data", function(event) {
-    event.preventDefault();
-    var name = $("input[name=name]").val();
-    var songs = $(".roles").val();
-    $.ajax({
-        method: "post",
-        url: "",
-        data: {
-            name: name,
-            roles: roles,
-        },
-        success: function(data) {
-            console.log(data);
-            $(".res-msg").css("display", "block");
-            $(".alert-success").text(data).show();
-            $("input[name=name]").val("");
-            $(".roles").val("").trigger("change");
-            setTimeout(function() {
-                $(".alert-success").hide();
-            }, 3500);
-        },
-    });
-});
-</script>
-
-
 
 </body>
 
