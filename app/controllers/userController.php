@@ -25,9 +25,16 @@ class UserController extends DataProvider{
             if($roleOfLoggingUserData->roleName == "admin"){
                 $_SESSION["username"] = $username;
                 $_SESSION["role"] = "admin";
-                redirect("../views/admin/Users.php",false);
+                redirect("../views/admin/bank.php",false);
                 // header("Location: ../views/admin/Bank.php");
-            }else{
+            }elseif($roleOfLoggingUserData->roleName == "subadmin"){
+                $_SESSION["username"] = $username;
+                // $_SESSION["test"] = "subadmintest";
+                $_SESSION["role"] = "subadmin";
+                redirect("../views/admin/bank.php",false);
+
+            }
+            else{
                 $_SESSION["username"] = $username;
                 $_SESSION["role"] = "client";
                 redirect("../views/client/index.php?id=" . $loggingUserData->userId,false);

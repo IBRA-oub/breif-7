@@ -3,7 +3,7 @@
 const CONFIG = [
     'db'=>'mysql:host=localhost;dbname=bank_db_br7',
     'db_user' => 'root',
-    'db_password' => 'Hamzalol1!'
+    'db_password' => ''
 ];
 
 
@@ -46,4 +46,3 @@ function redirect($url, $statusCode = 303)
    die();
 }
 ?>
-
