@@ -3,6 +3,7 @@
 require_once('DataProvider.php');
 
 class Users extends DataProvider {
+    private $Idd;
    public function addUser($username,$pw,$gendre,$roleName,$ville, $quartier,$rue,$codePostal,$email,$phone,$agencyId) {
     $db=$this->connect();
     if($db==null){
@@ -24,7 +25,6 @@ class Users extends DataProvider {
    
         INSERT INTO roleofuser (userId, roleName)
         VALUES (@userId, :roleName);
-   
 
    
         COMMIT;';
@@ -44,7 +44,40 @@ class Users extends DataProvider {
    ]);
    $db=null;
    $stmt=null;
+
+//    $sql = "SELECT max(userId) FROM users";
+//    $stmt = $db->query($sql);
+
 }
+
+
+// public function addRole($role){
+//     $db=$this->connect();
+//     $sql= "INSERT INTO roleofuser (userId, roleName) VALUES (max(userId), :roleName)";
+
+//     $stmt = $db->prepare($sql);
+//     $stmt->execute([
+//         // ':userId'=> $userId,
+//         ":roleName" => $role
+//        ]);
+// }
+public function addMultiRoles($userId,$roleName){
+    $db=$this->connect();
+    if($db==null){
+        return null;
+   }
+   $sql= "INSERT INTO roleofuser (userId, roleName)
+            VALUES (:userId, :roleName);";
+
+$stmt = $db->prepare($sql);
+$stmt->execute([
+ ':userId'=> $userId,
+ ":roleName" => $roleName
+]);
+$db=null;
+$stmt=null;
+}
+
 
 
 public function displayUser(){
@@ -72,6 +105,21 @@ WHERE users.adrId = adress.adrId
    $query = null;
    $db=null;
    return $data_users;
+}
+
+
+public function lastUserId(){
+    $db=$this->connect();
+    if($db==null){
+        return null;
+   }
+
+   $query = $db->query('SELECT MAX(userId) FROM users');
+    
+   $data_usersId=$query->fetchAll(PDO::FETCH_OBJ);
+   $query = null;
+   $db=null;
+   return $data_usersId;
 }
 
 
@@ -256,6 +304,35 @@ public function getRoleByUsername($username){
 }
 
 
+
+public function displayUserPermission($id){
+
+    $db=$this->connect();
+    if($db==null){
+        return null;
+   }
+
+   $query = "SELECT 
+   users.userId,
+   users.username,
+   rolepermissions.permission_name,
+   roleofuser.roleName
+FROM users
+JOIN roleofuser ON users.userId = roleofuser.userId
+JOIN rolepermissions ON roleofuser.roleName = rolepermissions.role_name
+WHERE users.userId = :id";
+
+   $stmt=$db->prepare($query);
+
+   $stmt->execute([
+    "id" => $id ]);
+
+    $data_userall= $stmt->fetchAll(PDO::FETCH_OBJ);
+
+   $query = null;
+   $db=null;
+   return $data_userall;
+}
 
 
 
