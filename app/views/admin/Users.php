@@ -116,6 +116,7 @@ if (empty(array_filter($errors))) {
 <?php include './aside.php'?>
 
 <!-- ============ Content ============= -->
+
 <div class="md:p-6 bg-white md:m-5">
     <div class="flex items-center justify-between">
         <div>
@@ -124,13 +125,16 @@ if (empty(array_filter($errors))) {
             </h3>
             <p class="text-xl">Our Users around The world</p>
         </div>
+
         <div>
             <button class="bg-[#186F65] text-white w-[160px] h-[50px] rounded-md" id="addBank">
                 Add User
             </button>
         </div>
     </div>
-    <!-- ========== table Banks ======== -->
+
+    <!-- ========== table Banks-desktop ======== -->
+
     <div class="hidden md:block  rounded-lg overflow-hidden mt-10">
         <table class=" 
            w-full   " id="table1">
@@ -267,15 +271,18 @@ if (empty(array_filter($errors))) {
                     <?php if (!empty($errors['username'])) : ?>
                     <div class="text-red-500"><?php echo $errors['username']; ?></div>
                     <?php endif; ?>
+
                 </div>
                 <div class="w-[50%]">
                     <label for="" class="text-sm sm:text-xl">Email</label>
                     <input type="email" name="email"
                         class="block w-full py-3 text-sm sm:text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                         placeholder="Enter email " />
+
                     <?php if (!empty($errors['email'])) : ?>
                     <div class="text-red-500"><?php echo $errors['email']; ?></div>
                     <?php endif; ?>
+
                 </div>
             </div>
 
@@ -295,6 +302,7 @@ if (empty(array_filter($errors))) {
                     <input type="tel" name="phone"
                         class="block w-full py-3 text-sm sm:text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                         placeholder="Enter Your Phone " />
+
                     <?php if (!empty($errors['phone'])) : ?>
                     <div class="text-red-500"><?php echo $errors['phone']; ?></div>
                     <?php endif; ?>
@@ -308,6 +316,7 @@ if (empty(array_filter($errors))) {
                     <label for="" class="text-sm sm:text-xl">Password</label>
                     <input type="password" name="password" placeholder="Enter Password"
                         class="block w-full py-3 text-sm sm:text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100" />
+
                     <?php if (!empty($errors['password'])) : ?>
                     <div class="text-red-500"><?php echo $errors['password']; ?></div>
                     <?php endif; ?>
@@ -319,32 +328,39 @@ if (empty(array_filter($errors))) {
                 </div><?php if (!empty($errors['newpassword'])) : ?>
                 <div class="text-red-500"><?php echo $errors['newpassword']; ?></div>
                 <?php endif; ?>
+
             </div>
             <div class="flex gap-5">
                 <div class="w-full">
                     <label for="" class="text-sm sm:text-xl">Rue</label>
                     <input type="text" name="rue"
                         class="block w-full py-3 text-sm sm:text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+
                         placeholder="Enter Rue " /><?php if (!empty($errors['rue'])) : ?>
                     <div class="text-red-500"><?php echo $errors['rue']; ?></div>
                     <?php endif; ?>
+
                 </div>
                 <div class="w-full">
                     <label for="" class="text-sm sm:text-xl">Ville</label>
                     <input type="text" name="ville"
                         class="block w-full py-3 text-sm sm:text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+
                         placeholder="Enter Ville" /><?php if (!empty($errors['ville'])) : ?>
                     <div class="text-red-500"><?php echo $errors['ville']; ?></div>
                     <?php endif; ?>
+
                 </div>
             </div>
             <div class="w-full">
                 <label for="" class="text-sm sm:text-xl">Quartier</label>
                 <input type="text" name="quartier"
                     class="block w-full py-3 text-sm sm:text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+
                     placeholder="Enter  Quartier " /><?php if (!empty($errors['quartier'])) : ?>
                 <div class="text-red-500"><?php echo $errors['quartier']; ?></div>
                 <?php endif; ?>
+
             </div>
 
             <div class="flex gap-4">
@@ -352,6 +368,7 @@ if (empty(array_filter($errors))) {
                     <label for="" class="text-sm sm:text-xl">Agency</label>
                     <select name="agency" id=""
                         class="block w-full py-3 text-sm sm:text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100">
+
 
                         <?php
             foreach ($agency_list as $user) {
@@ -372,6 +389,7 @@ if (empty(array_filter($errors))) {
                         <option value="admin">Admin</option>
                         <option value="subadmin">subadmin</option>
                         <?php } ?>
+
                         <option value="client">Client</option>
 
                     </select>
@@ -380,9 +398,11 @@ if (empty(array_filter($errors))) {
                     <label for="" class="text-sm sm:text-xl">Code Postal</label>
                     <input type="text" name="postal"
                         class="block w-full py-3 text-sm sm:text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+
                         placeholder="Enter Code postal " /><?php if (!empty($errors['postal'])) : ?>
                     <div class="text-red-500"><?php echo $errors['postal']; ?></div>
                     <?php endif; ?>
+
                 </div>
             </div>
 
@@ -520,13 +540,13 @@ if (empty(array_filter($errors))) {
 <script>
 $(document).ready(function() {
     $('#table1').DataTable();
+
 });
 $(document).ready(function() {
     $('#table2').DataTable();
 
 });
 </script>
-
 
 <!-- ============multiple=============== -->
 
@@ -561,6 +581,7 @@ $("body").on("click", ".add-data", function(event) {
     });
 });
 </script>
+
 
 
 

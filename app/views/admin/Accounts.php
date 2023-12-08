@@ -21,6 +21,7 @@
 
 <!-- ========== End Header =========== -->
 <!-- ============ Content ============= -->
+
 <div class="md:p-6 bg-white md:m-5">
     <div class="flex items-center justify-between">
 
@@ -30,7 +31,9 @@
             </button>
         </div>
     </div>
-    <!-- ========== table Banks ======== -->
+
+    <!-- ========== table-Banks-desktop ======== -->
+
     <div class="hidden md:block rounded-lg overflow-hidden mt-10">
         <table class="w-full " id="table1">
             <thead class="">
@@ -170,25 +173,34 @@
             </tbody>
         </table>
     </div>
-    <!-- ============ Form to add Accounts ========= -->
+
+
+    <!--============Form to add Accounts=========-->
+
     <div>
         <form action="../../controllers/accounts/add_account.php" method="post"
             class="absolute  -left-20 top-[50%] md:left-[35%] translate-y-[-50%] bg-white p-5 w-[80%] md:w-[500px] rounded-md shadow-sm z-50 hidden"
             id="Add">
-            <h1 class="text-center font-semibold text-3xl my-5">
+
+            <h1 class="text-center font-semibold text-base md:text-xl my-5">
+
                 Add Account
             </h1>
 
             <div class="">
                 <label for="" class="text-base md:text-xl">Balance</label>
                 <input type="text" name="Balance"
+
                     class="block w-full py-3 text-base md:text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+
                     placeholder="Enter Balance " />
             </div>
             <div class="">
                 <label for="" class="text-base md:text-xl">R.I.B</label>
                 <input type="text" name="rib"
+
                     class="block w-full py-3 text-base md:text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+
                     placeholder="Enter R.I.B" />
             </div>
             <!-- ========= fetch users ======= -->
@@ -214,7 +226,9 @@
 
             <div>
                 <input type="submit" name="submit"
+
                     class="block w-full py-3 text-white text-base md:text-xl px-1 cursor-pointer mt-5 outline-none border-none bg-slate-900" />
+
             </div>
         </form>
     </div>

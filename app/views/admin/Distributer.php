@@ -36,18 +36,21 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 <!-- ============ Content ============= -->
 <div class="md:p-6 bg-white md:m-5">
     <div class="flex items-center justify-between">
+
         <div class="hidden md:block">
             <h3 class="text-orange-600 text-3xl font-bold tracking-widest mb-2">
                 Distributer
             </h3>
             <p class="text-xl">Our Banks around The world</p>
         </div>
+
         <div>
             <button class="bg-[#186F65] text-white w-[160px] h-[50px] rounded-md" id="addBank">
                 Add Distributer
             </button>
         </div>
     </div>
+
 
     <br>
 
@@ -58,6 +61,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
     </form>
 
     <!-- ========== table Banks ======== -->
+
 
     <div class="hidden md:block rounded-lg overflow-hidden mt-10">
         <table class="w-full table-auto" id="table1">
@@ -158,7 +162,6 @@ $conn = new mysqli($servername, $username, $password, $dbname);
         </table>
     </div>
 
-
     <!-- ============ Form to Add Distributer ========= -->
     <div>
         <form action="../../controllers/distributer/controller.php" method="post"
@@ -218,44 +221,58 @@ $conn = new mysqli($servername, $username, $password, $dbname);
             <?php if($distributer['atmId'] == $_GET['id']) { ?>
             <div class="w-full">
                 <input type="text" name="id"
-                    class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100 hidden"
+
+                    class="block w-full py-3 text-base md:text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100 hidden"
+
                     value="<?=$distributer['atmId']?>" />
             </div>
 
             <div class="w-full">
-                <label for="" class="text-xl">Address</label>
+
+                <label for="" class="text-base md:text-xl">Address</label>
                 <input type="text" name="address"
-                    class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+                    class="block w-full py-3 text-base md:text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+
                     value="<?=$distributer['adress']?>" />
             </div>
 
             <div class="w-full">
-                <label for="" class="text-xl">Longitude</label>
+
+                <label for="" class="text-base md:text-xl">Longitude</label>
                 <input type="text" name="longitude"
-                    class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+                    class="block w-full py-3 text-base md:text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+
                     value="<?=$distributer['longitude']?>" />
             </div>
 
             <div class="w-full">
-                <label for="" class="text-xl">Latitude</label>
+
+                <label for="" class="text-base md:text-xl">Latitude</label>
                 <input type="text" name="latitude"
-                    class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+                    class="block w-full py-3 text-base md:text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+
                     value="<?=$distributer['latitude']?>" />
             </div>
 
             <div class="w-full">
                 <input type="text" name="bank"
-                    class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100 hidden"
+
+                    class="block w-full py-3 text-base md:text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100 hidden"
+
                     value="<?=$distributer['bankId']?>" />
             </div>
 
             <input type="text" name="mode"
-                class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100 hidden"
+
+                class="block w-full py-3 text-base md:text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100 hidden"
+
                 value="edit">
 
             <div>
                 <input type="submit" name="submit" value="Edit"
-                    class="block w-full py-3 text-white mt-5 text-xl px-1 cursor-pointer my-2 outline-none border-none bg-slate-900" />
+
+                    class="block w-full py-3 text-white mt-5 text-base md:text-xl px-1 cursor-pointer my-2 outline-none border-none bg-slate-900" />
+
             </div>
             <?php } ?>
             <?php endforeach; ?>

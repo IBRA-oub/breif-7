@@ -74,12 +74,14 @@ $data_agence=$agence->displayAgency();
 <!-- ============ Content ============= -->
 <div class="md:p-6 bg-white md:m-5">
     <div class="flex items-center justify-between">
+
         <div class="hidden md:block">
             <h3 class="text-orange-600 text-3xl font-bold tracking-widest mb-2">
                 Agency
             </h3>
             <p class="text-base md:text-xl">Our Banks around The world</p>
         </div>
+
         <div>
             <button class="bg-[#186F65] text-white w-[160px] h-[50px] rounded-md" id="addBank">
                 Add Agency
@@ -95,10 +97,12 @@ $data_agence=$agence->displayAgency();
                     <th class="">Longitude</th>
                     <th class="">Latitude</th>
                     <th class="">BankName</th>
+
                     <?php if ($_SESSION["role"] === "admin") { ?>
 
                     <th class="">Actions</th>
                     <?php } ?>
+
                 </tr>
             </thead>
             <tbody>
@@ -110,7 +114,9 @@ $data_agence=$agence->displayAgency();
                     <td class="text-center"><?php echo $dagence->longitude ?></td>
                     <td class="text-center"><?php echo $dagence->latitude ?></td>
                     <td class="text-center"><?php echo $dagence->name ?></td>
+
                     <?php if ($_SESSION["role"] === "admin") { ?>
+
                     <td class="text-center">
                         <button class="bg-[#B5CB99] text-white w-[35px] h-[35px] rounded-md">
                             <a href="../../../app/views/agency/updateAgency.php?agence_id=<?= $dagence->agencyId;?>"> <i
@@ -122,6 +128,7 @@ $data_agence=$agence->displayAgency();
                                     class="fa-solid fa-trash" style="color:#186F65"></i></a>
                         </button>
                     </td>
+
                     <?php } ?>
 
                 </tr>
@@ -182,6 +189,7 @@ $data_agence=$agence->displayAgency();
 
         </table>
     </div>
+
     <!-- ============ Form to Add Agency ========= -->
     <div>
         <form action="" method="post"
@@ -269,6 +277,7 @@ $data_agence=$agence->displayAgency();
                                                 ";
                                             }
                                         ?>
+
                     </select>
                 </div>
                 <div class="w-[50%]">
@@ -326,6 +335,7 @@ $data_agence=$agence->displayAgency();
 <div class="bg-black bg-opacity-60 w-full h-[100vh] absolute top-0 left-0 hidden" id="overlayEdit"
     onclick="updateForm()"></div>
 </section>
+
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
