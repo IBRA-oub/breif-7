@@ -22,7 +22,7 @@
         </div>
         <div>
             <?php if( $_SESSION["role"] == "admin" ) {  ?>
-            <button class="bg-slate-900 text-white w-[160px] h-[50px] rounded-md" id="addBank">
+            <button class="bg-[#186F65] text-white w-[160px] h-[50px] rounded-md" id="addBank">
                 Add Bank
             </button>
             <?php } ?>
@@ -32,7 +32,7 @@
     <div class="rounded-lg overflow-hidden mt-10">
         <table class="w-full table-auto" id="table1">
             <thead class="">
-                <tr class="bg-slate-900 text-white h-[60px]">
+                <tr class="bg-[#186F65] text-white h-[60px]">
                     <th class="">ID</th>
                     <th class="">Denomination</th>
                     <th class="">Logo</th>
