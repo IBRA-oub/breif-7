@@ -1,4 +1,4 @@
-<div class="bg-white flex items-center justify-between p-5">
+<!-- <div class="bg-white flex items-center justify-between p-5">
     <h2 class="text-2xl tracking-widest font-bold">Dashboard</h2>
     <div class="flex gap-4 items-center mr-5">
     <div>
@@ -11,4 +11,4 @@
         class="w-[60px] h-[60px] rounded-full"
     />
     </div>
-</div>
+</div> -->
