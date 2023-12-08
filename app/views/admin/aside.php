@@ -21,7 +21,7 @@
 <body>
     <section class="flex items-center relative">
         <!-- =========== Aside bar =========== -->
-        <aside class="bg-indigo-950 h-[100vh] w-[320px] p-5 relative">
+        <aside class="bg-[#186F65] h-[100vh] w-[20%] sm:w-[320px] sm:p-5">
             <!-- ===== logo ===== -->
             <div>
                 <!-- <img
@@ -31,45 +31,49 @@
                     /> -->
             </div>
             <ul class="p-5 mt-10">
-                <h2 class="text-2xl font-bold my-5 text-white">General</h2>
+                <h2 class="text-base sm:text-2xl font-bold sm:my-5 text-white">General</h2>
                 <li class="my-2">
                     <a href="../../views/admin/bank.php"
                         class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-opacity-20">
-                        <i class="fa-solid fa-building-columns mr-5 text-lg group-hover:text-red-500"></i>Bank</a>
+                        <i class="fa-solid fa-building-columns mr-5 text-lg group-hover:text-red-500"></i><span
+                            class="hidden sm:inline-block">Bank</span></a>
                 </li>
                 <li class="my-2">
                     <a href="../../views/admin/Users.php"
                         class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-indigo-200 bg-opacity-20">
-                        <i class="fa-solid fa-user mr-5 text-lg group-hover:text-red-500"></i>Users</a>
+                        <i class="fa-solid fa-user mr-5 text-lg group-hover:text-red-500"></i><span
+                            class="hidden sm:inline-block">Users</span></a>
                 </li>
 
                 <?php if ($_SESSION["role"] != "admin") { ?>
                 <li class="my-2">
                     <a href="../../views/admin/Accounts.php"
                         class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-indigo-200 bg-opacity-20">
-                        <i class="fa-solid fa-file mr-5 text-lg group-hover:text-red-500"></i>Accounts</a>
+                        <i class="fa-solid fa-file mr-5 text-lg group-hover:text-red-500"></i><span
+                            class="hidden sm:inline-block">Accounts</span></a>
                 </li>
                 <li class="my-2">
                     <a href="../../views/admin/Transactions.php"
                         class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-indigo-200 bg-opacity-20">
                         <i class="fa-solid "></i>
-                        <i class="fa-solid fa-right-left mr-5 text-lg group-hover:text-red-500"></i>Transactions</a>
+                        <i class="fa-solid fa-right-left mr-5 text-lg group-hover:text-red-500"></i><span
+                            class="hidden sm:inline-block">Transactions</span></a>
                 </li>
 
 
                 <?php } ?>
 
                 <li class="my-2">
-                    <a href="../../views/admin/Agency.php"
-                        class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-indigo-200 bg-opacity-20">
-                        <i class="fa-solid fa-building text-white mr-5 text-lg group-hover:text-red-500"></i>
-                        Agnecy</a>
+                    <a href="../../views/admin/agency.php"
+                        class="text-lf font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-indigo-200 bg-opacity-20">
+                        <i class="fa-solid fa-credit-card text-white mr-5 text-lg group-hover:text-red-500"></i>
+                        <span class="hidden sm:inline-block">Agency</span></a>
                 </li>
                 <li class="my-2">
                     <a href="../../views/admin/Distributer.php"
                         class="text-lf font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-indigo-200 bg-opacity-20">
                         <i class="fa-solid fa-credit-card text-white mr-5 text-lg group-hover:text-red-500"></i>
-                        Distributer</a>
+                        <span class="hidden sm:inline-block">Distributeur</span></a>
                 </li>
             </ul>
             <?php include("logout.php"); ?>
