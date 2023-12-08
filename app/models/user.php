@@ -17,8 +17,8 @@ class Users extends DataProvider {
 
    SET @adressId = LAST_INSERT_ID();
 
-        INSERT INTO users (username, pw, gendre,agencyId,adrId)
-         VALUES (:username,:pw,:gendre,:agencyId,@adressId);
+        INSERT INTO users (username, pw, gendre,agencyId,adrId,delete_check)
+         VALUES (:username,:pw,:gendre,:agencyId,@adressId,1);
 
    
          SET @userId = LAST_INSERT_ID();
@@ -97,7 +97,7 @@ FROM users
 JOIN roleofuser ON users.userId = roleofuser.userId
 JOIN agency ON users.agencyId = agency.agencyId
 JOIN adress
-WHERE users.adrId = adress.adrId
+WHERE users.adrId = adress.adrId AND delete_check=1
 ;');
 
    $data_users=$query->fetchAll(PDO::FETCH_OBJ);
@@ -211,7 +211,9 @@ public function deleteUser($id) {
         return null;
     }
 
-    $sql = "DELETE FROM users WHERE userId = :id";
+    // $sql = "DELETE FROM users WHERE userId = :id";
+    $sql = "UPDATE users SET delete_check = '0' WHERE userId = :id";
+
 
     $smt = $db->prepare($sql);
 

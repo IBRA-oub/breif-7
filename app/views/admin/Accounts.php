@@ -190,19 +190,17 @@
             <div class="">
                 <label for="" class="text-base md:text-xl">Balance</label>
                 <input type="text" name="Balance"
-
                     class="block w-full py-3 text-base md:text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
-
                     placeholder="Enter Balance " />
             </div>
-            <div class="">
+            <!-- <div class="">
                 <label for="" class="text-base md:text-xl">R.I.B</label>
                 <input type="text" name="rib"
 
                     class="block w-full py-3 text-base md:text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
 
                     placeholder="Enter R.I.B" />
-            </div>
+            </div> -->
             <!-- ========= fetch users ======= -->
 
 
@@ -226,7 +224,6 @@
 
             <div>
                 <input type="submit" name="submit"
-
                     class="block w-full py-3 text-white text-base md:text-xl px-1 cursor-pointer mt-5 outline-none border-none bg-slate-900" />
 
             </div>
