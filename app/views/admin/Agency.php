@@ -3,6 +3,16 @@ require_once("../../models/agency.php");
 require_once("../../models/bank.php");
 require_once './check.php';
 
+$errors=[
+   'email'=>'',
+   'phone'=>'',
+   'rue'=>'',
+   'quartier'=>'',
+   'ville'=>'',
+   'latitude'=>'',
+   'postal'=>'',
+   'longitude'=>'',
+];
 
 $agence = new Agency();
 $bankk = new bank();
@@ -18,11 +28,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $postal=$_POST['postal'];
   
 
+  if (!filter_var($email, FILTER_VALIDATE_EMAIL) || !strpos($email, '@gmail.com')) {
+    $errors['email'] = "Invalid email format or not a Gmail address";
+}
+if (!preg_match("/^\+?\d{1,4}[-.\s]?\(?\d{1,4}\)?[-.\s]?\d{1,9}$/", $phone)) {
+  $errors['phone'] = "Invalid phone number format";
+}
+if (empty($latitude)) {
+  $errors['latitude'] = "please fill up the latitude";
+}
+if (empty($longitude )) {
+  $errors['longtitude'] = "please fill up the longtitude";
+}
+if (empty($ville)) {
+  $errors['ville'] = "please fill up the ville";
+}
+if (empty($quartier)){
+  $errors['quartier'] = "please fill up the quartier";
+}
+if (empty($rue)){
+  $errors['rue'] = "please fill up the rue";
+}
+if (empty($postal)){
+  $errors['postal'] = "please fill up the postal";
+}
+if (empty(array_filter($errors))) {
   $agence->addAgence($longitude,$latitude,$bank,$ville,$quartier,$rue,$postal,$email,$phone);
-    
+}
   }
 
-// ($username,$pw,$gendre,$role,$ville, $quartier,$rue,$codePostal,$email,$tel)
 
 $bankdata=$bankk->displayBank();
 
@@ -46,17 +80,11 @@ $data_agence=$agence->displayAgency();
             </h3>
             <p class="text-xl">Our Banks around The world</p>
         </div>
-
-
-        <?php if ($_SESSION["role"] === "admin") { ?>
-
         <div>
             <button class="bg-slate-900 text-white w-[160px] h-[50px] rounded-md" id="addBank">
                 Add Agency
             </button>
         </div>
-
-        <?php } ?>
     </div>
     <!-- ========== table Banks ======== -->
     <div class="rounded-lg overflow-hidden mt-10">
@@ -67,11 +95,7 @@ $data_agence=$agence->displayAgency();
                     <th class="">Longitude</th>
                     <th class="">Latitude</th>
                     <th class="">BankID</th>
-                    <?php if ($_SESSION["role"] === "admin") { ?>
-
                     <th class="">Actions</th>
-                    <?php } ?>
-
                 </tr>
             </thead>
             <tbody>
@@ -83,9 +107,6 @@ $data_agence=$agence->displayAgency();
                     <td class="text-center"><?php echo $dagence->longitude ?></td>
                     <td class="text-center"><?php echo $dagence->latitude ?></td>
                     <td class="text-center"><?php echo $dagence->name ?></td>
-
-                    <?php if ($_SESSION["role"] === "admin") { ?>
-
                     <td class="text-center">
                         <button class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md">
                             <a href="../../../app/views/agency/updateAgency.php?agence_id=<?= $dagence->agencyId;?>"> <i
@@ -97,8 +118,6 @@ $data_agence=$agence->displayAgency();
                                     class="fa-solid fa-trash"></i></a>
                         </button>
                     </td>
-                    <?php } ?>
-
                 </tr>
                 <?php 
               }
@@ -119,13 +138,18 @@ $data_agence=$agence->displayAgency();
                     <label for="" class="text-xl">Phone</label>
                     <input type="tel" name="phone"
                         class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
-                        placeholder="Enter Your Phone " />
+                        placeholder="Enter Your Phone " /><?php if (!empty($errors['phone'])) : ?>
+                    <div class="text-red-500"><?php echo $errors['phone']; ?></div>
+                    <?php endif; ?>
                 </div>
                 <div class="w-[50%]">
                     <label for="" class="text-xl">Email</label>
                     <input type="email" name="email"
                         class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                         placeholder="Enter email " />
+                    <?php if (!empty($errors['email'])) : ?>
+                    <div class="text-red-500"><?php echo $errors['email']; ?></div>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -135,11 +159,16 @@ $data_agence=$agence->displayAgency();
                     <label for="" class="text-xl">latitude</label>
                     <input type="text" name="latitude" placeholder="latitude"
                         class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100" />
+                    <?php if (!empty($errors['latitude'])) : ?>
+                    <div class="text-red-500"><?php echo $errors['latitude']; ?></div>
+                    <?php endif; ?>
                 </div>
                 <div class="w-[50%]">
                     <label for="" class="text-xl">longitude</label>
                     <input type="text" name="longitude" placeholder="longitude"
-                        class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100" />
+                        class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100" /><?php if (!empty($errors['longitude'])) : ?>
+                    <div class="text-red-500"><?php echo $errors['longitude']; ?></div>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="flex gap-5">
@@ -147,20 +176,27 @@ $data_agence=$agence->displayAgency();
                     <label for="" class="text-xl">Rue</label>
                     <input type="text" name="rue"
                         class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
-                        placeholder="Enter Rue " />
+                        placeholder="Enter Rue " /><?php if (!empty($errors['rue'])) : ?>
+                    <div class="text-red-500"><?php echo $errors['rue']; ?></div>
+                    <?php endif; ?>
                 </div>
                 <div class="w-full">
                     <label for="" class="text-xl">Ville</label>
                     <input type="text" name="ville"
                         class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                         placeholder="Enter Ville" />
+                    <?php if (!empty($errors['ville'])) : ?>
+                    <div class="text-red-500"><?php echo $errors['ville']; ?></div>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="w-full">
                 <label for="" class="text-xl">Quartier</label>
                 <input type="text" name="quartier"
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
-                    placeholder="Enter  Quartier " />
+                    placeholder="Enter  Quartier " /><?php if (!empty($errors['quartier'])) : ?>
+                <div class="text-red-500"><?php echo $errors['quartier']; ?></div>
+                <?php endif; ?>
             </div>
 
             <div class="flex gap-4">
@@ -183,6 +219,9 @@ $data_agence=$agence->displayAgency();
                     <input type="text" name="postal"
                         class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                         placeholder="Enter Code postal " />
+                    <?php if (!empty($errors['postal'])) : ?>
+                    <div class="text-red-500"><?php echo $errors['postal']; ?></div>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -202,13 +241,18 @@ $data_agence=$agence->displayAgency();
                 <label for="" class="text-xl">Latitude</label>
                 <input type="text" name="amount"
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
-                    placeholder="Latitude..." />
+                    placeholder="Latitude..." /><?php if (!empty($errors['latitude'])) : ?>
+                <div class="text-red-500"><?php echo $errors['latitude']; ?></div>
+                <?php endif; ?>
             </div>
             <div>
                 <label for="" class="text-xl">Logitude</label>
                 <input type="text" name="amount"
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                     placeholder="Logitude..." />
+                <?php if (!empty($errors['longitude'])) : ?>
+                <div class="text-red-500"><?php echo $errors['longitude']; ?></div>
+                <?php endif; ?>
             </div>
             <div>
                 <input type="submit" name="submit" value="Edit"
